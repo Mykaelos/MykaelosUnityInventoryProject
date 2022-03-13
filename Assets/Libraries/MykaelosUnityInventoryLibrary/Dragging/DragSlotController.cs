@@ -6,7 +6,7 @@ public class DragSlotController : MonoBehaviour, IDropHandler {
 
     // IDropHandler Unity Method - When DragViewController is dropped on this empty slot.
     public void OnDrop(PointerEventData eventData) {
-        var dragView = eventData?.pointerDrag?.GetComponent<DraggableViewController>();
+        var dragView = eventData?.pointerDrag?.GetComponent<DragViewController>();
         if (dragView == null) {
             return;
         }
@@ -15,7 +15,7 @@ public class DragSlotController : MonoBehaviour, IDropHandler {
     }
 
     // For DraggableViewController
-    public void HoldView(DraggableViewController dragView) {
+    public void HoldView(DragViewController dragView) {
         dragView.DragSlot = this;
         dragView.transform.SetParent(transform, false);
         dragView.transform.localPosition = Vector2.zero;

@@ -13,7 +13,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(CanvasGroup))] // Needed for ignoring raycasts when moving.
 [RequireComponent(typeof(Canvas))] // Needed for layer sorting. Set order to 1.
 [RequireComponent(typeof(GraphicRaycaster))] // Must be added when Canvas is used.
-public class DraggableViewController : MonoBehaviour, 
+public class DragViewController : MonoBehaviour, 
     IBeginDragHandler, IDragHandler, IEndDragHandler, 
     IPointerClickHandler, IDropHandler {
 
@@ -49,7 +49,7 @@ public class DraggableViewController : MonoBehaviour,
 
     // IDropHandler Unity Method - When an another DragView is dropped on this one.
     public void OnDrop(PointerEventData eventData) {
-        var otherDragView = eventData?.pointerDrag?.GetComponent<DraggableViewController>();
+        var otherDragView = eventData?.pointerDrag?.GetComponent<DragViewController>();
         if (otherDragView == null) {
             return;
         }
