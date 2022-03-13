@@ -1,0 +1,13 @@
+TODO
+
+- Items showing up in Inventory bag
+-- 
+
+
+
+
+
+Inventory view problems
+- cannot be a prefab or it can't be used in other projects
+- so it makes itself?
+- or 
