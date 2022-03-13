@@ -4,7 +4,6 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /**
- * 
  * Start Drag - OnBeginDrag, view starts moving.
  * Dragging - OnDrag, view is being moved around.
  * End Drag over new empty slot - slot.OnDrop, assign DragSlot.
@@ -18,23 +17,15 @@ public class DraggableViewController : MonoBehaviour,
     IBeginDragHandler, IDragHandler, IEndDragHandler, 
     IPointerClickHandler, IDropHandler {
 
-    //public static DraggableViewController CurrentlyDraggedItem; //TODO remove me!
     public DragSlotController PreviousDragSlot;
     public DragSlotController DragSlot;
-    //public IInventoryUnit InventoryUnit;
 
-
-    //public void Setup(IInventoryUnit inventoryUnit) {
-    //    InventoryUnit = inventoryUnit;
-    //}
 
     // IBeginDragHandler Unity Method
     public void OnBeginDrag(PointerEventData eventData) {
-        //CurrentlyDraggedItem = this;
         PreviousDragSlot = DragSlot;
         GetComponent<CanvasGroup>().blocksRaycasts = false;
         GetComponent<Canvas>().sortingOrder = 2;
-        ////DragSlot.OnBeginDragView(this);
     }
 
     // IDragHandler Unity Method
@@ -46,11 +37,11 @@ public class DraggableViewController : MonoBehaviour,
 
     // IEndDragHandler Unity Method
     public void OnEndDrag(PointerEventData eventData) {
-        //CurrentlyDraggedItem = null;
         GetComponent<CanvasGroup>().blocksRaycasts = true;
         GetComponent<Canvas>().sortingOrder = 1;
 
-        // If slot wasn't changed, then either item was dropped on the same slot (no op), or dropped out of bounds and should be returned to previous slot.
+        // If slot wasn't changed, then either item was dropped on the same slot (no op),
+        // or dropped out of bounds and should be returned to previous slot.
         if (DragSlot == PreviousDragSlot) {
             DragSlot.HoldView(this);
         }
@@ -58,30 +49,24 @@ public class DraggableViewController : MonoBehaviour,
 
     // IDropHandler Unity Method - When an another DragView is dropped on this one.
     public void OnDrop(PointerEventData eventData) {
-        var dragView = eventData?.pointerDrag?.GetComponent<DraggableViewController>();
+        var otherDragView = eventData?.pointerDrag?.GetComponent<DraggableViewController>();
+        if (otherDragView == null) {
+            return;
+        }
 
-        //Switch locations of itemViews
-        var tempPreviousItemSlot = dragView.DragSlot;
-        DragSlot.HoldView(dragView);
+        // Switch locations of itemViews
+        var otherDragSlot = otherDragView.DragSlot;
+        DragSlot.HoldView(otherDragView);
 
-        DragSlot = tempPreviousItemSlot;
+        DragSlot = otherDragSlot;
         DragSlot.HoldView(this);
-
-        ////Switch locations of itemViews
-        //var tempPreviousItemSlot = CurrentlyDraggedItem.DragSlot;
-        //DragSlot.HoldView(CurrentlyDraggedItem);
-
-        //DragSlot = tempPreviousItemSlot;
-        //DragSlot.HoldView(this);
     }
 
     // IPointerClickHandler Unity Method - When this view is clicked.
     public void OnPointerClick(PointerEventData eventData) {
-        //DragSlot.OnClickView(this);
+        LocalMessenger.Fire(EVENT_ON_CLICK_VIEW, new object[] { this, DragSlot });
     }
 
-
-    //TODO move events over here
 
     #region LocalMessenger EVENTS
     public const string EVENT_ON_BEGIN_DRAG_VIEW = "EVENT_ON_BEGIN_DRAG_VIEW";
