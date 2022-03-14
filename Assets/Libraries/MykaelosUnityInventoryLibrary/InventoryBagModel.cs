@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InventoryBagModel {
     private InventoryBagData InventoryBagData;
-    public List<InventorySlotModel> InventorySlotModels = new List<InventorySlotModel>();
+    private List<InventorySlotModel> InventorySlotModels = new List<InventorySlotModel>();
 
 
     public InventoryBagModel(InventoryBagData inventoryBagData) {
@@ -13,5 +13,9 @@ public class InventoryBagModel {
         for (int i = 0; i < InventoryBagData.InventorySlotDatas.Count; i++) {
             InventorySlotModels.Add(new InventorySlotModel(InventoryBagData.InventorySlotDatas[i]));
         }
+    }
+
+    public List<InventorySlotModel> GetInventorySlotModels() {
+        return InventorySlotModels;
     }
 }

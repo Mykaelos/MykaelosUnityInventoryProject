@@ -545,7 +545,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 657672774275ab0498746569c0c88178, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemViewPrefab: {fileID: 0}
+  ItemViewPrefab: {fileID: 6184651172611616101, guid: 72b51181f89f951449f6a6b2641b72fd, type: 3}
   InventorySlotPrefab: {fileID: 8473678073721233807, guid: d52f60515efab8a42928821d16fc7276, type: 3}
 --- !u!1 &519420028
 GameObject:

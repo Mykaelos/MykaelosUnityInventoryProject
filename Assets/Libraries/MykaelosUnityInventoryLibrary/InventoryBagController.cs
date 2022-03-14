@@ -26,13 +26,15 @@ public class InventoryBagController : MonoBehaviour {
         }
 
         invenBagData.InventorySlotDatas[2].ItemData = new ItemData {
-            Key = "Mushroom",
-            Name = "Mushroom"
+            Key = "Sword",
+            Name = "Sword",
+            SpriteName = "oryx_16bit_fantasy_items_200"
         };
 
         invenBagData.InventorySlotDatas[3].ItemData = new ItemData {
-            Key = "Skeleton",
-            Name = "Skeleton"
+            Key = "Gloves",
+            Name = "Gloves",
+            SpriteName = "oryx_16bit_fantasy_items_259"
         };
 
         Setup(new InventoryBagModel(invenBagData));
@@ -42,11 +44,26 @@ public class InventoryBagController : MonoBehaviour {
         transform.RemoveAll();
         LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)transform); // Because the GridLayoutGroup hasn't positioned the slots yet...
 
-        foreach (var inventorySlotModel in InventoryBagModel.InventorySlotModels) {
-            var slot = GameObject.Instantiate<GameObject>(InventorySlotPrefab);
-            slot.transform.SetParent(transform);
-        }
+        var inventorySlotModels = InventoryBagModel.GetInventorySlotModels();
 
-        // Spawn itemViews
+        foreach (var inventorySlotModel in inventorySlotModels) {
+            var slot = GameObject.Instantiate<GameObject>(InventorySlotPrefab);
+            slot.transform.SetParent(transform, false);
+            slot.GetComponent<InventorySlotController>().Setup(inventorySlotModel);
+
+            var itemModel = inventorySlotModel.GetItemModel();
+            if (itemModel != null) {
+                var item = GameObject.Instantiate<GameObject>(ItemViewPrefab);
+                item.transform.SetParent(slot.transform, false);
+
+                //item.GetComponent<Image>().sprite = itemModel.GetSprite();
+
+                item.GetComponent<InventoryItemView>().Setup(itemModel);
+                item.GetComponent<InventoryItemController>().Setup(itemModel);
+
+                
+                slot.GetComponent<DragSlotController>().HoldView(item.GetComponent<DragViewController>());
+            }
+        }
     }
 }

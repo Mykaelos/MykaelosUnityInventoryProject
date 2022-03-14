@@ -10,6 +10,17 @@ public class InventorySlotModel {
     public InventorySlotModel(InventorySlotData inventorySlotData) {
         InventorySlotData = inventorySlotData;
 
-        ItemModel = new ItemModel(InventorySlotData.ItemData);
+        if (InventorySlotData.ItemData != null) {
+            ItemModel = new ItemModel(InventorySlotData.ItemData);
+        }
+    }
+
+    public ItemModel GetItemModel() {
+        return ItemModel;
+    }
+
+    public void SetItemModel(ItemModel itemModel) {
+        ItemModel = itemModel;
+        InventorySlotData.ItemData = ItemModel.ItemData;
     }
 }

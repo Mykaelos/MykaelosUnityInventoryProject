@@ -6,4 +6,6 @@ using UnityEngine;
 public class ItemData {
     public string Key;
     public string Name;
+
+    public string SpriteName;
 }
