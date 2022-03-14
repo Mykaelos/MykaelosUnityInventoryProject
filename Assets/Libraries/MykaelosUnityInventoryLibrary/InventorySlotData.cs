@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //Savable
-public class ItemData {
-    public string Key;
-    public string Name;
+public class InventorySlotData {
+    public ItemData ItemData;
 }
