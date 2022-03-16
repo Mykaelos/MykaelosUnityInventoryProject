@@ -21,6 +21,6 @@ public class InventorySlotModel {
 
     public void SetItemModel(ItemModel itemModel) {
         ItemModel = itemModel;
-        InventorySlotData.ItemData = ItemModel.ItemData;
+        InventorySlotData.ItemData = ItemModel?.ItemData;
     }
 }

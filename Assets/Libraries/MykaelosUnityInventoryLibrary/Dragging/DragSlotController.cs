@@ -16,6 +16,9 @@ public class DragSlotController : MonoBehaviour, IDropHandler {
 
     // For DraggableViewController
     public void HoldView(DragViewController dragView) {
+        var previousSlot = dragView.DragSlot;
+        previousSlot?.RemoveView(dragView);
+        
         dragView.DragSlot = this;
         dragView.transform.SetParent(transform, false);
         dragView.transform.localPosition = Vector2.zero;
@@ -23,8 +26,13 @@ public class DragSlotController : MonoBehaviour, IDropHandler {
         LocalMessenger.Fire(EVENT_HOLD_VIEW, new object[] { this, dragView });
     }
 
+    public void RemoveView(DragViewController dragView) {
+        LocalMessenger.Fire(EVENT_REMOVE_VIEW, new object[] { this, dragView });
+    }
+
     #region LocalMessenger EVENTS
     public const string EVENT_HOLD_VIEW = "EVENT_HOLD_VIEW";
+    public const string EVENT_REMOVE_VIEW = "EVENT_REMOVE_VIEW";
 
     private LocalMessenger LocalMessenger = new LocalMessenger();
 

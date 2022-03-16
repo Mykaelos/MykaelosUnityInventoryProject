@@ -14,6 +14,7 @@ public class InventorySlotController : MonoBehaviour {
 
     public void Awake() {
         GetComponent<DragSlotController>().On(DragSlotController.EVENT_HOLD_VIEW, OnHoldView);
+        GetComponent<DragSlotController>().On(DragSlotController.EVENT_REMOVE_VIEW, OnRemoveView);
     }
 
     private void OnHoldView(object[] args) {
@@ -21,5 +22,9 @@ public class InventorySlotController : MonoBehaviour {
         var itemModel = dragView.GetComponent<InventoryItemController>().GetItemModel();
 
         InventorySlotModel.SetItemModel(itemModel);
+    }
+
+    private void OnRemoveView(object[] args) {
+        InventorySlotModel.SetItemModel(null);
     }
 }
